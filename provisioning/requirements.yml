@@ -1,17 +1,17 @@
 - name: sandbox-logging-bash
-  src: https://gitlab.ics.muni.cz/muni-kypo/ansible-roles/sandbox-logging-bash.git
+  src: https://github.com/cyberrangecz/ansible-role-sandbox-logging
   scm: git
-  version: 1.0.5
+  version: master
 
 - name: sandbox-logging-msf
-  src: https://gitlab.ics.muni.cz/muni-kypo/ansible-roles/sandbox-logging-msf.git
+  src: https://github.com/cyberrangecz/ansible-role-sandbox-logging
   scm: git
-  version: 1.0.1
+  version: master
 
 - name: sandbox-logging-forward
-  src: https://gitlab.ics.muni.cz/muni-kypo/ansible-roles/sandbox-logging-forward.git
+  src: https://github.com/cyberrangecz/ansible-role-sandbox-logging
   scm: git
-  version: 1.0.2
+  version: master
 
 - name: chrony
   src: https://gitlab.ics.muni.cz/muni-kypo/ansible-roles/chrony.git
