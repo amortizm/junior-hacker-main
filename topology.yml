@@ -11,21 +11,21 @@ hosts:
     base_box:
       image: debian-12-x86_64
       mgmt_user: debian
-    flavor: m1.medium
+    flavor: standard.medium
     hidden: true
 
   - name: client
     base_box: 
       image: debian-12-x86_64
       mgmt_user: debian
-    flavor: m1.medium
+    flavor: standard.medium
     hidden: true
 routers:
   - name: router
     base_box:
       image: debian-12-x86_64
       mgmt_user: debian
-    flavor: m1.small
+    flavor: standard.small
 
 wan:
   name: internet-connection
