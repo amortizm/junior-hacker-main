@@ -3,29 +3,29 @@ name: junior-hacker-sandbox-CTMA
 hosts:
   - name: attacker
     base_box: 
-      image: kali-vnc
+      image: kali
       mgmt_user: debian
-    flavor: csirtmu.tiny1x2
+    flavor: standard.medium
 
   - name: server
     base_box:
-      image: debian-10-man
+      image: debian-12-x86_64
       mgmt_user: debian
     flavor: m1.medium
     hidden: true
 
   - name: client
     base_box: 
-      image: debian-10-man
+      image: debian-12-x86_64
       mgmt_user: debian
     flavor: m1.medium
     hidden: true
 routers:
   - name: router
     base_box:
-      image: debian-10-man
+      image: debian-12-x86_64
       mgmt_user: debian
-    flavor: csirtmu.tiny1x2
+    flavor: m1.tiny
 
 wan:
   name: internet-connection
