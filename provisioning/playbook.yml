@@ -26,6 +26,8 @@
       kypo_user_access_username: user
       kypo_user_access_password: Password123
       kypo_user_access_sudo: True
+      # SOLUCIÓN: Pasar la clave pública de la infraestructura KYPO
+      kypo_user_access_public_key: "{{ pool_public_key }}"
       when: hostvars["man"] is defined
 
 # Enable logging
