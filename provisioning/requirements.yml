@@ -1,15 +1,16 @@
+---
 - name: sandbox-logging-bash
-  src: https://github.com/cyberrangecz/ansible-role-sandbox-logging
+  src: https://github.com
   scm: git
   version: master
 
 - name: sandbox-logging-msf
-  src: https://github.com/cyberrangecz/ansible-role-sandbox-logging
+  src: https://github.com
   scm: git
   version: master
 
 - name: sandbox-logging-forward
-  src: https://github.com/cyberrangecz/ansible-role-sandbox-logging
+  src: https://github.com
   scm: git
   version: master
 
