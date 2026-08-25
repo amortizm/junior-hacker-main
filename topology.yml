@@ -11,14 +11,14 @@ hosts:
     base_box:
       image: debian-12-x86_64
       mgmt_user: debian
-    flavor: standard.medium
+    flavor: standard.small
     hidden: true
 
   - name: client
     base_box: 
       image: debian-12-x86_64
       mgmt_user: debian
-    flavor: standard.medium
+    flavor: standard.small
     hidden: true
 routers:
   - name: router
