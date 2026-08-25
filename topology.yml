@@ -52,5 +52,3 @@ router_mappings:
     - router: router
       network: switch
       ip: 10.1.26.1
-
-groups: []
