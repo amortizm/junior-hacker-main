@@ -1,4 +1,13 @@
 ---
+- name: Validar disponibilidad de las instancias
+  hosts: hosts
+  gather_facts: no
+  tasks:
+    - name: Esperar conexión SSH activa antes de configurar
+      wait_for_connection:
+        delay: 10
+        timeout: 120
+        
 # Basic configuration of all defined devices
 
 # Installation of common tools at all hosts
