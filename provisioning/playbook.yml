@@ -46,17 +46,15 @@
       lineinfile:
         path: /etc/resolv.conf
         line: "nameserver 8.8.8.8"
-
+        
 - name: setup hosts logging roles
   hosts:
-    - attacker
-    - server
-    - client
     - router
+    - hosts
   become: yes
   vars:
     sandbox_name: junior-hacker-local
-    central_syslog_ip: 192.168.100.1
+#    central_syslog_ip: 192.168.100.1
   roles:
     - role: sandbox-logging
       slf_destination_port: '{% if hostvars["man"] is defined -%} 514 {%- else -%} 515 {%- endif %}'
