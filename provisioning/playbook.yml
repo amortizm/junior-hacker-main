@@ -9,6 +9,31 @@
         timeout: 120
         
 # Basic configuration of all defined devices
+- name: Pre-configurar entorno, zona horaria y protección apt
+  hosts: all
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: "PROC-022 | Prevenir congelamiento de apt/rsyslog mediante policy-rc.d"
+      ansible.builtin.raw: |
+        echo '#!/bin/sh' > /usr/sbin/policy-rc.d
+        echo 'exit 101' >> /usr/sbin/policy-rc.d
+        chmod 0755 /usr/sbin/policy-rc.d
+      changed_when: false
+
+    - name: "PROC-022 | Establecer Zona Horaria America/Bogota"
+      ansible.builtin.raw: |
+        timedatectl set-timezone America/Bogota || (ln -sf /usr/share/zoneinfo/America/Bogota /etc/localtime && echo "America/Bogota" > /etc/timezone)
+      changed_when: false
+
+    - name: "PROC-022 | Sincronizar reloj de kernel con el Hardware Virtual / Nova (172.27.1.79)"
+      ansible.builtin.raw: |
+        systemctl stop systemd-timesyncd 2>/dev/null || true
+        echo "[Time]" > /etc/systemd/timesyncd.conf
+        echo "NTP=172.27.1.79" >> /etc/systemd/timesyncd.conf
+        systemctl start systemd-timesyncd 2>/dev/null || true
+        hwclock --hctosys 2>/dev/null || true
+      changed_when: false
 
 # Installation of common tools at all hosts
 - name: Configuring hosts
