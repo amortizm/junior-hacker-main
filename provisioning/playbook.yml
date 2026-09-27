@@ -5,35 +5,25 @@
   tasks:
     - name: Esperar conexión SSH activa antes de configurar
       wait_for_connection:
-        delay: 10
+        delay: 5
         timeout: 120
         
 # Basic configuration of all defined devices
-- name: Pre-configurar entorno, zona horaria y protección apt
+
+- name: Pre-configurar entorno, zona horaria y proteccion apt
   hosts: all
   gather_facts: no
   become: yes
   tasks:
-    - name: "PROC-022 | Prevenir congelamiento de apt/rsyslog mediante policy-rc.d"
+    - name: "PROC-024 | Desactivar actualizaciones automaticas de fondo que bloquean dpkg/apt"
       ansible.builtin.raw: |
-        echo '#!/bin/sh' > /usr/sbin/policy-rc.d
-        echo 'exit 101' >> /usr/sbin/policy-rc.d
-        chmod 0755 /usr/sbin/policy-rc.d
+        systemctl stop unattended-upgrades apt-daily.timer apt-daily-upgrade.timer 2>/dev/null || true
+        systemctl disable unattended-upgrades apt-daily.timer apt-daily-upgrade.timer 2>/dev/null || true
+        pkill -9 -f "apt|apt-get|dpkg" 2>/dev/null || true
+        rm -f /var/lib/dpkg/lock* /var/lib/apt/lists/lock /var/cache/apt/archives/lock
+        dpkg --configure -a --force-confold 2>/dev/null || true
+      changed_when: falsenfold 2>/dev/null || true
       changed_when: false
-
-    - name: "PROC-022 | Establecer Zona Horaria America/Bogota"
-      ansible.builtin.raw: |
-        timedatectl set-timezone America/Bogota || (ln -sf /usr/share/zoneinfo/America/Bogota /etc/localtime && echo "America/Bogota" > /etc/timezone)
-      changed_when: false
-
-    #- name: "PROC-022 | Sincronizar reloj de kernel con el Hardware Virtual / Nova (172.27.1.79)"
-    #  ansible.builtin.raw: |
-    #    systemctl stop systemd-timesyncd 2>/dev/null || true
-    #    echo "[Time]" > /etc/systemd/timesyncd.conf
-    #    echo "NTP=172.27.1.79" >> /etc/systemd/timesyncd.conf
-    #    systemctl start systemd-timesyncd 2>/dev/null || true
-    #    hwclock --hctosys 2>/dev/null || true
-    #  changed_when: false
 
 # Installation of common tools at all hosts
 - name: Configuring hosts
@@ -74,12 +64,12 @@
         
 - name: setup hosts logging roles
   hosts:
-    - router
+    - routers
     - hosts
   become: yes
   vars:
     sandbox_name: junior-hacker-local
-   #central_syslog_ip: 192.168.100.1
+    central_syslog_ip: 172.27.0.3
   roles:
     - role: sandbox-logging
       slf_destination_port: '{% if hostvars["man"] is defined -%} 514 {%- else -%} 515 {%- endif %}'
