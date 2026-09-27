@@ -14,6 +14,8 @@
   hosts: all
   gather_facts: no
   become: yes
+  environment:
+    DEBIAN_FRONTEND: noninteractive
   tasks:
     - name: "PROC-024 | Desactivar actualizaciones automaticas de fondo que bloquean dpkg/apt"
       ansible.builtin.raw: |
