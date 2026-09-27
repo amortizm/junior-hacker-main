@@ -72,6 +72,27 @@
   vars:
     sandbox_name: junior-hacker-local
     central_syslog_ip: 172.27.0.3
+  pre_tasks:
+    - name: "PROC-033 | Pre-instalar rsyslog y neutralizar timeouts de apt-get update"
+      ansible.builtin.shell: |
+        # 1. Limpieza de locks
+        pkill -9 -f "apt|apt-get|dpkg" 2>/dev/null || true
+        rm -f /var/lib/dpkg/lock* /var/lib/apt/lists/lock /var/cache/apt/archives/lock
+        dpkg --configure -a --force-confold 2>/dev/null || true
+
+        # 2. Pre-instalar rsyslog con timeout rápido antes de invocar el rol
+        apt-get update -y -o Acquire::http::Timeout="2" -o Acquire::ftp::Timeout="2" || true
+        apt-get install -y --no-install-recommends rsyslog || true
+
+        # 3. Inyectar configuración para que 'update_cache: yes' del rol sea instantáneo y no use red
+        echo 'Acquire::http::Timeout "1";' > /etc/apt/apt.conf.d/99no-network-update
+        echo 'Acquire::https::Timeout "1";' >> /etc/apt/apt.conf.d/99no-network-update
+        echo 'APT::Get::List-Cleanup "false";' >> /etc/apt/apt.conf.d/99no-network-update
+      args:
+        executable: /bin/bash
+      changed_when: false
+      failed_when: false
+      
   roles:
     - role: sandbox-logging
       slf_destination_port: '{% if hostvars["man"] is defined -%} 514 {%- else -%} 515 {%- endif %}'
@@ -79,3 +100,11 @@
       slf_sandbox_id: "{{ global_sandbox_id | default(student_id) | default(0) }}"
       slf_sandbox_name: '{{ global_sandbox_name | default(sandbox_name) }}'
       slf_pool_id: '{{ global_pool_id | default(None) }}'
+      
+  post_tasks:
+    - name: "PROC-033 | Limpiar configuración temporal de APT tras la ejecución del rol"
+      ansible.builtin.file:
+        path: /etc/apt/apt.conf.d/99no-network-update
+        state: absent
+      changed_when: false
+      failed_when: false
