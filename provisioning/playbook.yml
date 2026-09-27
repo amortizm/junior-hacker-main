@@ -16,16 +16,16 @@
   become: yes
   environment:
     DEBIAN_FRONTEND: noninteractive
-  tasks:
-    - name: "PROC-024 | Desactivar actualizaciones automaticas de fondo que bloquean dpkg/apt"
-      ansible.builtin.raw: |
-        systemctl stop unattended-upgrades apt-daily.timer apt-daily-upgrade.timer 2>/dev/null || true
-        systemctl disable unattended-upgrades apt-daily.timer apt-daily-upgrade.timer 2>/dev/null || true
-        pkill -9 -f "apt|apt-get|dpkg" 2>/dev/null || true
-        rm -f /var/lib/dpkg/lock* /var/lib/apt/lists/lock /var/cache/apt/archives/lock
-        dpkg --configure -a --force-confold 2>/dev/null || true
-      changed_when: falsenfold 2>/dev/null || true
-      changed_when: false
+  #tasks:
+  #  - name: "PROC-024 | Desactivar actualizaciones automaticas de fondo que bloquean dpkg/apt"
+  #    ansible.builtin.raw: |
+  #      systemctl stop unattended-upgrades apt-daily.timer apt-daily-upgrade.timer 2>/dev/null || true
+  #      systemctl disable unattended-upgrades apt-daily.timer apt-daily-upgrade.timer 2>/dev/null || true
+  #      pkill -9 -f "apt|apt-get|dpkg" 2>/dev/null || true
+  #      rm -f /var/lib/dpkg/lock* /var/lib/apt/lists/lock /var/cache/apt/archives/lock
+  #      dpkg --configure -a --force-confold 2>/dev/null || true
+  #    changed_when: falsenfold 2>/dev/null || true
+  #    changed_when: false
 
 # Installation of common tools at all hosts
 - name: Configuring hosts
